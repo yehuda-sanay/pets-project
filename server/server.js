@@ -6,6 +6,7 @@ require('./DB')
 const path = require('path');
 
 const usersRouter = require('../server/routes/users-router')
+const veterinariansRouter = require('./routes/veterinarians-router')
 const passport = require('passport');
 require('./config/passport')(passport);
 const app = express();
@@ -16,7 +17,7 @@ app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 
-
+app.use('/veterinarian',veterinariansRouter)
 app.use('/api/users', usersRouter);
 
 app.get('/', (req, res) => {
