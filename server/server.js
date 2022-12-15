@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 require('./DB')
 const path = require('path');
+const cookieParser= require('cookie-parser');
 
 const usersRouter = require('../server/routes/users-router')
 const veterinariansRouter = require('./routes/veterinarians-router')
@@ -16,9 +17,10 @@ app.use(passport.initialize())
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
+app.use(cookieParser())
 
 app.use('/veterinarian',veterinariansRouter)
-app.use('/api/users', usersRouter);
+app.use('/users', usersRouter);
 
 app.get('/', (req, res) => {
     res.send({ massage: "success" })

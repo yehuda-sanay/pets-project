@@ -22,7 +22,7 @@ const UsersSchema = new mongoose.Schema(
     },
     passwordValidation: {
       type: String,
-      required: true,
+      
     },
     pets:[{type: mongoose.Schema.Types.ObjectId,
           ref:'Pets'}]
