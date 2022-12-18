@@ -29,9 +29,7 @@ const PetsSchema = new mongoose.Schema(
     clinicVisits: [{
 
     }],
-    users:[{
-        
-    }],
+    
     Recommendations:[{
     }]
   },

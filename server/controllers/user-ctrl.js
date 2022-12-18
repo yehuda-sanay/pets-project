@@ -3,6 +3,16 @@ const UsersModal = require('../models/users-model');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+//validation
+
+const joi=require('@hapi/joi');
+
+const schema = {
+    firstName: joi.string().required,
+    email: joi.string().email().required(),
+    password: joi.string().required().min(6)
+}
+
 const getUsers = async(req, res) => {
     await UsersModal.find().then((result) => {
       return result.length == 0
