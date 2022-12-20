@@ -7,11 +7,13 @@ const {
   refreshToken,
   logout,
   getUsers,
+  updateUser,
 } = require("../controllers/user-ctrl");
 
 const usersRouter = express.Router();
 
-usersRouter.get("/getusers",getUsers)
+usersRouter.get("/",getUsers)
+usersRouter.put("/update/:id",updateUser)
 usersRouter.post("/signup", signup);
 usersRouter.post("/login", login);
 usersRouter.get("/user", verifyToken, getUser);

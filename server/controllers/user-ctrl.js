@@ -14,13 +14,23 @@ const schema = {
 }
 
 const getUsers = async(req, res) => {
-    await UsersModal.find().then((result) => {
+    await UsersModal.find().populate({ 
+      path: 'pets',
+      populate: {
+        path: 'clinicVisits',
+      } 
+   }).then((result) => {
       return result.length == 0
         ? res.status(300).json({ successes: true, msg: "no users was found" })
         : res.status(200).json({ successes: true , result});
     })
   .catch (error=> res.status(400).json({ successes: false , error})) 
 };
+const updateUser = async (req, res) => {
+  await UsersModal.findByIdAndUpdate(req.params.id, req.body.user)
+      .then(result => res.status(200).json({ success: true, result }))
+      .catch(error => res.status(400).json({ success: false, error }))
+}
 
 const signup = async (req, res, next) => {
   const { firstName,lastName, email, password } = req.body;
@@ -171,3 +181,4 @@ exports.verifyToken = verifyToken;
 exports.getUser = getUser;
 exports.refreshToken = refreshToken;
 exports.getUsers=getUsers   
+exports.updateUser=updateUser

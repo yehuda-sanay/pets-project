@@ -1,7 +1,7 @@
 const petsModel = require('../models/pets-model');
 
 const getPets = async (req, res) => {
-    await petsModel.find({})
+    await petsModel.find({}).populate("clinicVisits")
         .then((Pets, error) => {
             if (error) {
                 return res.status(400).json({ success: false, error })
@@ -24,6 +24,7 @@ const getPetById = async (req, res) => {
 }
 const createPet = async (req, res) => {
     //TODO validation
+    console.log("all good");
     await petsModel.insertMany(req.body.Pet)
         .then(() => res.status(300).json({ success: true, massage: "Pet added succesfuly" }))
         .catch((error) => res.status(400).json({ success: false, error }))
