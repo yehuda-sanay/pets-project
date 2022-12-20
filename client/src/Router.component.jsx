@@ -1,12 +1,14 @@
 import {Route, Routes} from 'react-router-dom'
-import { Home,SingIn } from './component/pages'
+import {Home,LogIn,Register,Profile} from "./component/pages/index"
 
 
 export default function Routing(){
     return(
         <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='Sing In' element={<SingIn/>}/>
+            <Route path='logIn' element={<LogIn/>}/>
+            <Route path='Register' element={<Register/>}/>
+            <Route path='Profile' element={<Profile/>}/>
         </Routes>
     )
 }

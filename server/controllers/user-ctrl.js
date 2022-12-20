@@ -73,9 +73,7 @@ const login = async (req, res, next) => {
 
   console.log("Generated Token\n", token);
 
-  if (req.cookies[`${existingUser._id}`]) {
-    req.cookies[`${existingUser._id}`] = "";
-  }
+   
 
   res.cookie(String(existingUser._id), token, {
     path: "/",

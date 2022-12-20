@@ -27,11 +27,9 @@ const PetsSchema = new mongoose.Schema(
         required: true,
     },
     clinicVisits: [{
-
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Clinic visits",
     }],
-    
-    Recommendations:[{
-    }]
   },
   { timeseries: true }
 );
