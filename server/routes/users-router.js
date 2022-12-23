@@ -8,11 +8,13 @@ const {
   logout,
   getUsers,
   updateUser,
+  getUserById,
 } = require("../controllers/user-ctrl");
 
 const usersRouter = express.Router();
 
 usersRouter.get("/",getUsers)
+usersRouter.get("/byid/:id",getUserById)
 usersRouter.put("/update/:id",updateUser)
 usersRouter.post("/signup", signup);
 usersRouter.post("/login", login);

@@ -9,7 +9,6 @@ const cookieParser= require('cookie-parser');
 const usersRouter = require('../server/routes/users-router')
 const veterinariansRouter = require('./routes/veterinarians-router')
 const petsRouter = require('./routes/pets-router')
-const clinicVisitsRouter = require('./routes/clinicVisits-router')
 const passport = require('passport');
 require('./config/passport')(passport);
 const app = express();
@@ -22,7 +21,6 @@ app.use(cors())
 app.use(cookieParser())
 
 app.use('/veterinarian',veterinariansRouter)
-app.use('/clinicVisits',clinicVisitsRouter)
 app.use('/pets',petsRouter)
 app.use('/users', usersRouter);
 

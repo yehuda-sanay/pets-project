@@ -26,10 +26,27 @@ const PetsSchema = new mongoose.Schema(
         type: String,
         required: true,
     },
-    clinicVisits: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Clinic visits",
-    }],
+    clinicVisits: [
+      {
+        visitDate:{
+            type:Date,
+            
+        },
+        medicalProblem:{
+            type:String,
+            
+        },
+        medicalCare: {
+            type:String,
+    
+        },
+        medicalObservation: {
+            type:Date
+    
+        }
+    
+     }
+    ],
   },
   { timeseries: true }
 );

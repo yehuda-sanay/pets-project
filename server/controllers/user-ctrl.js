@@ -5,21 +5,26 @@ const jwt = require("jsonwebtoken");
 
 //validation
 
-const joi=require('@hapi/joi');
+// const joi=require('@hapi/joi');
 
-const schema = {
-    firstName: joi.string().required,
-    email: joi.string().email().required(),
-    password: joi.string().required().min(6)
-}
+// const schema = {
+//     firstName: joi.string().required,
+//     email: joi.string().email().required(),
+//     password: joi.string().required().min(6)
+// }
+const getUserById = async (req, res) => {
+  await UsersModal.findById(req.params.id)
+    .then((result) => {
+      return !result
+      ? res.status(300).json({ successes: false, msg: "no user was found" })
+      : res.status(201).json({ successes: true , result});
+    })
+    .catch((error) => res.status(400).json({ successes: false, error }));
+};
+
 
 const getUsers = async(req, res) => {
-    await UsersModal.find().populate({ 
-      path: 'pets',
-      populate: {
-        path: 'clinicVisits',
-      } 
-   }).then((result) => {
+    await UsersModal.find().populate("pets").then((result) => {
       return result.length == 0
         ? res.status(300).json({ successes: true, msg: "no users was found" })
         : res.status(200).json({ successes: true , result});
@@ -33,7 +38,7 @@ const updateUser = async (req, res) => {
 }
 
 const signup = async (req, res, next) => {
-  const { firstName,lastName, email, password } = req.body;
+  const { firstName,lastName, email,phone, password } = req.body;
   let existingUser;
   try {
     existingUser = await UsersModal.findOne({ email: email });
@@ -50,6 +55,7 @@ const signup = async (req, res, next) => {
     firstName,
     lastName,
     email,
+    phone,
     password: hashedPassword,
   });
 
@@ -78,7 +84,7 @@ const login = async (req, res, next) => {
     return res.status(400).json({ message: "Inavlid Email / Password" });
   }
   const token = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, {
-    expiresIn: "35s",
+    expiresIn: "1hr",
   });
 
   console.log("Generated Token\n", token);
@@ -182,3 +188,4 @@ exports.getUser = getUser;
 exports.refreshToken = refreshToken;
 exports.getUsers=getUsers   
 exports.updateUser=updateUser
+exports.getUserById=getUserById

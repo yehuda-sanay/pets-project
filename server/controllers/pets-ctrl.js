@@ -1,7 +1,7 @@
 const petsModel = require('../models/pets-model');
 
 const getPets = async (req, res) => {
-    await petsModel.find({}).populate("clinicVisits")
+    await petsModel.find({})
         .then((Pets, error) => {
             if (error) {
                 return res.status(400).json({ success: false, error })

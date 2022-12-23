@@ -15,6 +15,10 @@ const UsersSchema = new mongoose.Schema(
       required: true,
       unique:true
     },
+    phone:{
+      type:String,
+      require:true
+    },
     password: {
       type: String,
       required: true,
