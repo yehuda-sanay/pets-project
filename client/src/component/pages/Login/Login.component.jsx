@@ -1,54 +1,84 @@
 import React from 'react'
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-// import Avatar from '@mui/material/Avatar';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-// import LockOutlinedIcon from '@mui/material/LockOutlinedIcon';
-// import LockOpenIcon from '@mui/icons-material/LockOpen';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Link from '@mui/material/Link';
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SingIn=()=>{
+    const history = useNavigate();
+
+    const [inputs, setInputs] = useState({
+      email: "",
+      password: "",
+    });
+  
+    const handleChange = (e) => {
+      setInputs((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value
+      }));
+      console.log(e.target.name,"value",e.target.value);
+    };
+  
+    const sendRequest = async () => {
+      const res = await axios
+        .post("http://localhost:8080/users/login", {
+          email: inputs.email,
+          password: inputs.password,
+        })
+        .catch((err) => console.log(err));
+      const data = await res.data;
+      return data;
+    };
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(inputs);
+      sendRequest().then(() => history("/profile"))
+    };
+    return (
+        <div>
+          <form onSubmit={handleSubmit}>
+            <Box
+              marginLeft="auto"
+              marginRight="auto"
+              width={300}
+              display="flex"
+              flexDirection={"column"}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography variant="h2">Login</Typography>
+
+              <TextField
+              name="email"
+              value={inputs.email}
+                variant="outlined"
+                placeholder="Email"
+                margin="normal"
+                type={"email"}
+                onChange={handleChange}
+              />
+               <TextField
+               name="password"
+              value={inputs.password}
+               variant="outlined"
+                placeholder="Password"
+                 margin="normal"
+                 type="password"
+                 onChange={handleChange}
+                  />
     
-    const sxStyle= { my: 3 }
-    const paperStyle={padding :20,height:'70vh',width:300, margin:"20px auto"}
-    // const avatarStyle={backgroundColor:'#1bbd7e'}
-    const btnstyle={margin:'8px 0'}
-    return(
-        <Grid>
-            <Paper elevation={10} style={paperStyle}>
-                <Grid align='center'>
-                     {/* <Avatar style={avatarStyle}><LockOpenIcon/></Avatar> */}
-                    <h2>Sign In</h2>
-                </Grid>
-                <TextField sx={sxStyle} label='Username' placeholder='Enter username' fullWidth required/>
-                <TextField sx={sxStyle} label='Password' placeholder='Enter password' type='password' fullWidth required/>
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        name="checkedB"
-                        color="primary"
-                    />
-                    }
-                    label="Remember me"
-                 />
-                <Button sx={sxStyle} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Sign in</Button>
-                <Typography sx={sxStyle} >
-                     <Link href="#" >
-                        Forgot password ?
-                </Link>
-                </Typography>
-                <Typography sx={sxStyle} > Do you have an account ?
-                     <Link href="#" >
-                        Sign Up 
-                </Link>
-                </Typography>
-            </Paper>
-        </Grid>
-    )
+              <Button variant="contained" type="submit">
+                Login
+              </Button>
+            </Box>
+          </form>
+        </div>
+      );
+    
+    
+    
 }
 
 export default SingIn
@@ -125,3 +155,42 @@ export default SingIn
 // }
 
 // export default LoginScreen;
+
+
+// const sxStyle= { my: 3 }
+//     const paperStyle={padding :20,height:'70vh',width:300, margin:"20px auto"}
+//     // const avatarStyle={backgroundColor:'#1bbd7e'}
+//     const btnstyle={margin:'8px 0'}
+//     return(
+//         <Grid>
+//             <form onSubmit={handleSubmit}>
+//             <Paper elevation={10} style={paperStyle}>
+//                 <Grid align='center'>
+//                      {/* <Avatar style={avatarStyle}><LockOpenIcon/></Avatar> */}
+//                     <h2>Sign In</h2>
+//                 </Grid>
+//                 <TextField sx={sxStyle} label='Email' placeholder='Enter Email' fullWidth required/>
+//                 <TextField sx={sxStyle} label='Password' placeholder='Enter password' type='password' fullWidth required/>
+//                 <FormControlLabel
+//                     control={
+//                     <Checkbox
+//                         name="checkedB"
+//                         color="primary"
+//                     />
+//                     }
+//                     label="Remember me"
+//                  />
+//                 <Button sx={sxStyle} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Sign in</Button>
+//                 <Typography sx={sxStyle} >
+//                      <Link href="#" >
+//                         Forgot password ?
+//                 </Link>
+//                 </Typography>
+//                 <Typography sx={sxStyle} > Do you have an account ?
+//                      <Link href="#" >
+//                         Sign Up 
+//                 </Link>
+//                 </Typography>
+//             </Paper>
+//         </form>
+//         </Grid>

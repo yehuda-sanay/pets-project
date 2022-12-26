@@ -24,10 +24,6 @@ const UsersSchema = new mongoose.Schema(
       required: true,
       minlength:6,
     },
-    passwordValidation: {
-      type: String,
-      
-    },
     pets:[{type: mongoose.Schema.Types.ObjectId,
           ref:'Pets'}]
   },

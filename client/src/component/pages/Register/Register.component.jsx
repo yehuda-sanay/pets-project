@@ -1,72 +1,114 @@
-import './Register.css'
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-// import Avatar from "@mui/material/Avatar";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-// import Radio from "@mui/material/Radio";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-// import FormLabel from "@mui/material/FormLabel";
-// import FormControl from "@mui/material/FormControl";
-// import RadioGroup from "@mui/material/RadioGroup";
-// import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import Typography from "@mui/material/Typography";
+import "./Register.css";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const Register = () => {
-  const sxStyle= { my: 3 }
-  
-  const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
-  const headerStyle = { margin: 0 };
-  // const avatarStyle = { backgroundColor: "#1bbd7e" };
-  // const marginTop = { marginTop: 5 };
+  const history = useNavigate();
+
+  const [inputs, setInputs] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+    console.log(e.target.name,"value",e.target.value);
+  };
+
+  const sendRequest = async () => {
+    const res = await axios
+      .post("http://localhost:8080/users/signup", {
+        firstName: inputs.firstName,
+        lastName: inputs.lastName,
+        email: inputs.email,
+        phone: inputs.phone,
+        password: inputs.password,
+      })
+      .catch((err) => console.log(err));
+    const data = await res.data;
+    return data;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs);
+    sendRequest().then(() => history("/login"));
+  };
   return (
-    <Grid>
-      <Paper elevation={20} style={paperStyle}>
-        <Grid align="center">
-          {/* <Avatar style={avatarStyle}>
-            <RemoveCircleIcon />
-          </Avatar> */}
-          <h2 style={headerStyle}>Sign Up</h2>
-          <Typography variant="caption" gutterBottom>
-            Please fill this form to create an account !
-          </Typography>
-        </Grid>
-        <form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <Box
+          marginLeft="auto"
+          marginRight="auto"
+          width={300}
+          display="flex"
+          flexDirection={"column"}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography variant="h2">Signup</Typography>
+
           <TextField
-            sx={
-              sxStyle
-            }
-            fullWidth
-            label="Name"
-            placeholder="Enter your name"
+            name="firstName"
+            onChange={handleChange}
+            value={inputs.firstName}
+            variant="outlined"
+            placeholder="First Name"
+            margin="normal"
+            type="text"
           />
-          <TextField sx={
-              sxStyle
-            } fullWidth label="Email" placeholder="Enter your email" />
           <TextField
-            fullWidth
-            label="Password"
-            placeholder="Enter your password"
+          name="lastName"
+          value={inputs.lastName}
+            variant="outlined"
+            placeholder="Last Name"
+            margin="normal"
+            type="text"
+            onChange={handleChange}
           />
-          <TextField sx={
-              sxStyle
-            }
-            fullWidth
-            label="Confirm Password"
-            placeholder="Confirm your password"
+          <TextField
+          name="email"
+          value={inputs.email}
+            variant="outlined"
+            placeholder="Email"
+            margin="normal"
+            type={"email"}
+            onChange={handleChange}
           />
-          <FormControlLabel
-            control={<Checkbox name="checkedA" />}
-            label="I accept the terms and conditions."
+          <TextField
+          name="phone"
+          value={inputs.phone}
+            variant="outlined"
+            placeholder="Phone Number"
+            margin="normal"
+            type="text"
+            onChange={handleChange}
           />
-          <Button type="submit" variant="contained" color="primary">
-            Sign up
+           <TextField
+           name="password"
+          value={inputs.password}
+           variant="outlined"
+            placeholder="Password"
+             margin="normal"
+             type="password"
+             onChange={handleChange}
+              />
+
+          <Button variant="contained" type="submit">
+            Signup
           </Button>
-        </form>
-      </Paper>
-    </Grid>
+        </Box>
+      </form>
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ export default function Routing(){
     return(
         <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='logIn' element={<LogIn/>}/>
+            <Route path='login' element={<LogIn/>}/>
             <Route path='register' element={<Register/>}/>
             <Route path='addPet' element={<AddPet/>}/>
             <Route path='petInfo' element={<PetInfo/>}/>

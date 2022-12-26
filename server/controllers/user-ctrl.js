@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
 
   let existingUser;
   try {
-    existingUser = await UsersModal.findOne({ email: email });
+    existingUser = await User.findOne({ email: email });
   } catch (err) {
     return new Error(err);
   }
@@ -84,12 +84,14 @@ const login = async (req, res, next) => {
     return res.status(400).json({ message: "Inavlid Email / Password" });
   }
   const token = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, {
-    expiresIn: "1hr",
+    expiresIn: "35s",
   });
 
   console.log("Generated Token\n", token);
 
-   
+  if (req.cookies[`${existingUser._id}`]) {
+    req.cookies[`${existingUser._id}`] = "";
+  }
 
   res.cookie(String(existingUser._id), token, {
     path: "/",

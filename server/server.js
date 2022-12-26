@@ -17,7 +17,7 @@ const port = 8080;
 app.use(passport.initialize())
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors({credentials:true, origin:"http://localhost:3000"}))
 app.use(cookieParser())
 
 app.use('/veterinarian',veterinariansRouter)
