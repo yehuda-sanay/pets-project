@@ -5,6 +5,8 @@ import { Button, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect,useState } from 'react';
 import PetCard from '../../featurs/cards/AllCards'
+import { Container, Grid } from '@mui/material';
+
 axios.defaults.withCredentials = true;
 let firstRender= true;
 
@@ -44,37 +46,22 @@ useEffect(() => {
 ,[]
 )
 console.log(user);
-console.log(user?.firstName);
+console.log(user?.pets);
 
   return (
     <div>
-      <PetCard/>
 
-      { user && <h1>{user?.firstName}</h1>}
-    <MainScreen title='welcome back Yehuda Sanay'>
-      <Link to='createpet'>
-      <Button style={{marginLeft:10, marginBottom: 6}} size='lg'>
-        Add New Pet
-      </Button>
-      <Card style={{ margin:10}}>
-        <Card.Header style={{display:'flex'}}>
-          <span
-          style={{
-            color:'black',
-            textDecoration:'none',
-            flex:1,
-            cursor:'pointer',
-            alignSelf:'center',
-            fontSize:18,
-          }}
-          >title</span>
-          <div>
-            <Button>Edit</Button>
-            <Button variant='danger' className='mx-2'>Delete</Button>
-          </div>
-        </Card.Header>
-      </Card>
-      </Link>
+    <MainScreen style={{ margin:50,marginTop:10, marginBottom: 6}} title={`welcome back ${user?.firstName} ${user?.lastName}`}>
+      <Container>
+      <Grid container>
+        {user?.pets.map(items =>(
+        <Grid style={{ margin:70,marginLeft:10, marginBottom: 6}} item key={items.id} xs={12} md={6} lg={4}>
+       <PetCard pets={items}/>
+      </Grid>
+        ))}
+      </Grid>
+      </Container>
+  
     </MainScreen>
     </div>
   );

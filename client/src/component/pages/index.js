@@ -1,9 +1,9 @@
 import Home from "./Home/Home.component";
-import Register from "./Register/Register.component"
+import Signup from "./Signup/Signup.component"
 import LogIn from './Login/Login.component'
 import UserProfile from "./UserProfile/UserProfile.component";
 import AddPet from "./AddPet/AddPet.component";
 import PetInfo from "./PetInfo/PetInfo.component";
 
 
-export {Home,LogIn,Register,UserProfile,AddPet,PetInfo}
+export {Home,LogIn,Signup,UserProfile,AddPet,PetInfo}

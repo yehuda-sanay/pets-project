@@ -1,11 +1,11 @@
-import "./Register.css";
+import "./Signup.css";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-const Register = () => {
+const Signup = () => {
   const history = useNavigate();
 
   const [inputs, setInputs] = useState({
@@ -112,4 +112,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signup;

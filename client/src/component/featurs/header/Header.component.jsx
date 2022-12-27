@@ -1,15 +1,35 @@
 import { Link } from 'react-router-dom';
 import React,{useState} from "react";
 import { AppBar, Box, Tab, Tabs, Toolbar, Typography } from "@mui/material";
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios'
+import { authActions } from '../../../redux/store';
+axios.defaults.withCredentials= true
 
 
 export default function Header(){
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state=> state.isLoggedIn)
+const sendLogoutReq = async ()=>{
+  const res = await axios.post("http://localhost:8080/users/logout",null,{
+      withCredentials:true
+    });
+    if(res.status === 200){
+      return res
+    }
+    return new Error("Unable To Logout. Please try again")
+}
+  const handleLogout =()=>{
+    sendLogoutReq().then(()=> dispatch(authActions.logout()))
+  }
+
+  console.log(isLoggedIn);
   const [value, setValue] = useState();
       return (
         <div>
           <AppBar position="sticky">
             <Toolbar>
-              <Typography variant="h3">MernAuth</Typography>
+              <Typography variant="h3">VET-TECH</Typography>
               <Box sx={{ marginLeft: "auto" }}>
                 <Tabs
                   indicatorColor="secondary"
@@ -17,10 +37,12 @@ export default function Header(){
                   value={value}
                   textColor="inherit"
                 >
+                      {!isLoggedIn && <>                  
                       <Tab to="/login" LinkComponent={Link} label="Login" />
-                      <Tab to="/register" LinkComponent={Link} label="Register" />
-                      <Tab to="/profile" LinkComponent={Link} label="Profile" />
-                      <Tab to="/" LinkComponent={Link} label="Home" />
+                      <Tab to="/signup" LinkComponent={Link} label="Signup" /></>}
+                      {isLoggedIn &&(
+                      <Tab onClick={handleLogout} to="/" LinkComponent={Link} label="Logout" />
+                      )}{""}
                 </Tabs>
               </Box>
             </Toolbar>

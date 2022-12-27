@@ -3,8 +3,11 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../../redux/store';
 
 const SingIn=()=>{
+  const dispatch=useDispatch()
     const history = useNavigate();
 
     const [inputs, setInputs] = useState({
@@ -34,7 +37,7 @@ const SingIn=()=>{
     const handleSubmit = (e) => {
       e.preventDefault();
       console.log(inputs);
-      sendRequest().then(() => history("/profile"))
+      sendRequest().then(()=>dispatch(authActions.login())).then(() => history("/profile"))
     };
     return (
         <div>

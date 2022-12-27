@@ -25,7 +25,7 @@ const getPetById = async (req, res) => {
 const createPet = async (req, res) => {
     //TODO validation
     console.log("all good");
-    await petsModel.insertMany(req.body.Pet)
+    await petsModel.insertMany(req.body)
         .then(() => res.status(300).json({ success: true, massage: "Pet added succesfuly" }))
         .catch((error) => res.status(400).json({ success: false, error }))
 }

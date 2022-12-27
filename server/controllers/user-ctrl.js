@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await UsersModal.findOne({ email: email });
   } catch (err) {
     return new Error(err);
   }
@@ -125,7 +125,7 @@ const getUser = async (req, res, next) => {
   const userId = req.id;
   let user;
   try {
-    user = await UsersModal.findById(userId, "-password");
+    user = await UsersModal.findById(userId, "-password").populate("pets");
   } catch (err) {
     return new Error(err);
   }

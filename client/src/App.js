@@ -2,21 +2,22 @@
 import Header from './component/featurs/header/Header.component';
 import Footer from './component/featurs/footer/Footer.component';
 import Routing from './Router.component';
-import UsersProvaider from './contexts/UsersProvaider'
+import { useSelector } from 'react-redux';
+import React from 'react';
+
 
 export default function App() {
+  const isLoggedIn =useSelector((state)=> state.isLoggedIn);
+  console.log(isLoggedIn);
   return (
-    <div className="App">
-      
-      <UsersProvaider>
+   <React.Fragment>
+  
       <Header/>
       <main style={{minHeight:"93vh"}} >
       <Routing/>
       </main>
       <Footer/>
-      </UsersProvaider>
-
-    </div>
+    </React.Fragment>
   );
 }
 
